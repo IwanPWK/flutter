@@ -70,7 +70,7 @@ class BarCharts extends StatelessWidget {
                   width: 27,
                   height: 13,
                   decoration: BoxDecoration(
-                    color: Color(0xFFF7209B7),
+                    color: Color(0xfff7209b7),
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -129,7 +129,7 @@ class BarCharts extends StatelessWidget {
                   yValueMapper: (ChartColumnData data, _) => data.y1,
                   name: 'Data two',
                   width: 0.5,
-                  color: Color(0xFFF7209B7),
+                  color: Color(0xfff7209b7),
                   dataLabelSettings: const DataLabelSettings(isVisible: true),
                 ),
               ],

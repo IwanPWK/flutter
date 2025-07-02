@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bar_charts/chart_screens/bar_charts.dart';
+import 'package:flutter_bar_charts/chart_screens/vertical_bar_charts.dart';
 import 'package:flutter_bar_charts/constants.dart';
 
 class ChartScreens extends StatelessWidget {
@@ -12,7 +13,13 @@ class ChartScreens extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(defaultPadding),
-            child: Column(children: [BarCharts()]),
+            child: Column(
+              children: [
+                BarCharts(),
+                SizedBox(height: defaultPadding),
+                VerticalBarCharts(),
+              ],
+            ),
           ),
         ),
       ),
