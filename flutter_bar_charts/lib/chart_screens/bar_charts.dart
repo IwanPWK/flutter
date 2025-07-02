@@ -22,7 +22,7 @@ class BarCharts extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Vertical bar',
+                      'Bar Charts',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,
