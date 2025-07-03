@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bar_charts/chart_screens/bar_charts.dart';
+import 'package:flutter_bar_charts/chart_screens/common_vertical_bar_charts.dart';
 import 'package:flutter_bar_charts/chart_screens/floating_range_column_charts.dart';
 import 'package:flutter_bar_charts/chart_screens/range_column_charts.dart';
 import 'package:flutter_bar_charts/chart_screens/vertical_bar_charts.dart';
@@ -25,6 +26,7 @@ class ChartScreens extends StatelessWidget {
                 SizedBox(height: defaultPadding),
                 FloatingRangeColumnCharts(),
                 SizedBox(height: defaultPadding),
+                CommonVerticalBarCharts(),
               ],
             ),
           ),
