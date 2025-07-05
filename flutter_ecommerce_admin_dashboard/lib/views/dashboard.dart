@@ -103,17 +103,20 @@ class Dashboard extends StatelessWidget {
                         size: 20,
                         color: isSelected ? Color(0xFFB71C1C) : Colors.white,
                       ),
-                      if (controller.sidebarOpen.value) SizedBox(width: 15),
+
                       if (controller.sidebarOpen.value)
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color:
-                                isSelected ? Color(0xFFB71C1C) : Colors.white,
-                            fontWeight:
-                                isSelected
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
+                        Flexible(
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                              color:
+                                  isSelected ? Color(0xFFB71C1C) : Colors.white,
+                              fontWeight:
+                                  isSelected
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                     ],

@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_admin_dashboard/controllers/dashboard_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 
 class StatisticsSection extends StatefulWidget {
   const StatisticsSection({super.key});
@@ -30,20 +30,23 @@ class _StatisticsSectionState extends State<StatisticsSection> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            _BuildDashboardCards(),
+            _buildDashboardCards(),
             SizedBox(height: 30),
-            _BuildChartsRow(),
+            _buildChartsRow(),
             SizedBox(height: 30),
-            _BuildFilters(),
+            _buildFilters(),
             SizedBox(height: 30),
-            _BuildDataTable(),
+            _buildDataTable(),
+            SizedBox(height: 20),
+            _buildPagination(),
+            SizedBox(height: 100),
           ],
         ),
       ),
     );
   }
 
-  Widget _BuildDashboardCards() {
+  Widget _buildDashboardCards() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -118,7 +121,7 @@ class _StatisticsSectionState extends State<StatisticsSection> {
     );
   }
 
-  Widget _BuildChartsRow() {
+  Widget _buildChartsRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -366,7 +369,7 @@ class _StatisticsSectionState extends State<StatisticsSection> {
     );
   }
 
-  Widget _BuildFilters() {
+  Widget _buildFilters() {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -429,7 +432,7 @@ class _StatisticsSectionState extends State<StatisticsSection> {
     );
   }
 
-  Widget _BuildDataTable() {
+  Widget _buildDataTable() {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -455,15 +458,105 @@ class _StatisticsSectionState extends State<StatisticsSection> {
             return Center(child: Text("Something Went Wrong"));
           }
           final data = _applyFilers(snapshot.data!);
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              sortColumnIndex: [
+                'productName',
+                'category',
+                'sales',
+                'stock',
+                'totalRevenue',
+                'averageOrderValue',
+                'dateAdded',
+              ].indexOf(_sortColumn),
+              sortAscending: _ascending,
+              columns: [
+                _BuildDataColumn("Product Name", 'productName'),
+                _BuildDataColumn("Category", 'category'),
+                _BuildDataColumn("Sales", 'sales', numeric: true),
+                _BuildDataColumn("Stock", 'stock', numeric: true),
+                _BuildDataColumn(
+                  "Total Revenue",
+                  'totalRevenue',
+                  numeric: true,
+                ),
+                _BuildDataColumn(
+                  "Avg Order Value",
+                  'averageOrderValue',
+                  numeric: true,
+                ),
+                _BuildDataColumn("Date Added", 'dateAdded'),
+              ],
+              rows: data.map((item) => _BuildDataRow(item)).toList(),
+            ),
+          );
         },
       ),
+    );
+  }
+
+  DataColumn _BuildDataColumn(
+    String label,
+    String key, {
+    bool numeric = false,
+  }) {
+    return DataColumn(
+      label: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+      numeric: numeric,
+      onSort: (columnIndex, ascending) {
+        setState(() {
+          _sortColumn = key;
+          _ascending = ascending;
+        });
+      },
+    );
+  }
+
+  DataRow _BuildDataRow(Map<String, dynamic> item) {
+    String formatNumber(dynamic value) {
+      if (value is num) {
+        return NumberFormat('#,###').format(value);
+      }
+      return value.toString();
+    }
+
+    String formatCurrency(dynamic value) {
+      if (value == null) return "N/A";
+      if (value is num) {
+        return '\$${NumberFormat('#,###.00').format(value)}';
+      }
+      return value.toString();
+    }
+
+    String formatDate(dynamic value) {
+      if (value == null) return "N/A";
+      try {
+        return DateFormat(
+          'MMM d, yyy',
+        ).format(DateTime.parse(value.toString()));
+      } catch (e) {
+        return value.toString();
+      }
+    }
+
+    return DataRow(
+      cells: [
+        DataCell(Text(item['productName']?.toString() ?? "N/A")),
+        DataCell(Text(item['category']?.toString() ?? "N/A")),
+        DataCell(Text(formatNumber(item['sales']))),
+        DataCell(Text(formatNumber(item['stock']))),
+        DataCell(Text(formatCurrency(item['totalRevenue']))),
+        DataCell(Text(formatCurrency(item['averageOrderValue']))),
+        DataCell(Text(formatDate(item['dateAdded']))),
+      ],
     );
   }
 
   List<Map<String, dynamic>> _applyFilers(List<Map<String, dynamic>> data) {
     String searchText = _searchController.text.toLowerCase();
 
-    var filteredData =
+    var filterData =
         data.where((item) {
           if (_filterCategory != 'All' && item['category'] != _filterCategory)
             return false;
@@ -474,5 +567,43 @@ class _StatisticsSectionState extends State<StatisticsSection> {
             return false;
           return true;
         }).toList();
+
+    filterData.sort((a, b) {
+      var aValue = a[_sortColumn];
+      var bValue = b[_sortColumn];
+      if (aValue is String && bValue is String) {
+        return _ascending ? aValue.compareTo(bValue) : bValue.compareTo(aValue);
+      } else if (aValue is num && bValue is num) {
+        return _ascending ? aValue.compareTo(bValue) : bValue.compareTo(aValue);
+      }
+      return 0;
+    });
+    return filterData;
+  }
+
+  Widget _buildPagination() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text("1-10 of 50 items"),
+        SizedBox(width: 16),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.chevron_left, color: Colors.grey),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.redAccent,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text("1", style: TextStyle(color: Colors.white)),
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.chevron_right, color: Colors.redAccent),
+        ),
+      ],
+    );
   }
 }

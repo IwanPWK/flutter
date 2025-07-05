@@ -10,8 +10,8 @@ class SectionModel {
 }
 
 class DashboardController extends GetxController {
-  final RxInt currentSectionIndex = 0.obs;
-  final RxBool sidebarOpen = false.obs;
+  final RxInt currentSectionIndex = 5.obs;
+  final RxBool sidebarOpen = true.obs;
 
   final RxList<SectionModel> sections =
       <SectionModel>[
@@ -25,7 +25,6 @@ class DashboardController extends GetxController {
 
   // getting and creating dummy data, you can use api or database
   Future<List<Map<String, dynamic>>> fetchData() async {
-    await Future.delayed(Duration(seconds: 1));
     return List.generate(
       5,
       (index) => {
