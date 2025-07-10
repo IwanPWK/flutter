@@ -66,7 +66,7 @@ class DatabaseProvider with ChangeNotifier {
       // expense table
       await txn.execute('''CREATE TABLE $eTable(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
+        titleExpense TEXT,
         amount TEXT,
         date TEXT,
         category TEXT
@@ -74,10 +74,10 @@ class DatabaseProvider with ChangeNotifier {
 
       // insert the initial categories.
       // this will add all the categories to category table and initialize the 'entries' with 0 and 'totalAmount' to 0.0
-      List<String> titles = icons.keys.toList();
-      for (int i = 0; i < icons.length; i++) {
+      List<String> titlesExpense = iconsExpense.keys.toList();
+      for (int i = 0; i < iconsExpense.length; i++) {
         await txn.insert(cTable, {
-          'title': titles[i],
+          'title': titlesExpense[i],
           'entries': 0,
           'totalAmount': (0.0).toString(),
         });
