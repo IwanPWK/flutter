@@ -3,6 +3,7 @@ import 'package:flutter_workout_dashboard/screen/dashboard/row1.dart';
 
 import '../constants.dart';
 import 'dashboard/header.dart';
+import 'dashboard/row2.dart';
 import 'side_main.dart';
 
 class MainScreen extends StatefulWidget {
@@ -31,6 +32,8 @@ class _MainScreenState extends State<MainScreen> {
                   SizedBox(height: defaultPadding * 2),
                   Row1(),
                   SizedBox(height: defaultPadding * 2),
+                  Row2(),
+                  SizedBox(height: defaultPadding),
                 ],
               ),
             ),
