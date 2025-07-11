@@ -42,23 +42,26 @@ class _SideMainState extends State<SideMain> {
             ),
           ),
           SizedBox(height: defaultPadding * 2),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-              itemCount: demoMainSide.length,
-              itemBuilder: (context, index) {
-                return listTile1(index, demoMainSide[index]);
-              },
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              child: ListView.builder(
+                itemCount: demoMainSide.length,
+                itemBuilder: (context, index) {
+                  return listTile1(index, demoMainSide[index]);
+                },
+              ),
             ),
           ),
           SizedBox(height: defaultPadding * 2),
-          SizedBox(
-            height: 150,
-            child: ListView.builder(
-              itemCount: demoMainSideSetting.length,
-              itemBuilder: (context, index) {
-                return listTile2(index, demoMainSideSetting[index]);
-              },
+          Expanded(
+            child: SizedBox(
+              child: ListView.builder(
+                itemCount: demoMainSideSetting.length,
+                itemBuilder: (context, index) {
+                  return listTile2(index, demoMainSideSetting[index]);
+                },
+              ),
             ),
           ),
         ],

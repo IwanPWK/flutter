@@ -66,7 +66,7 @@ class _Row1State extends State<Row1> {
           gradientMiddle: Color(0xFF78E5E7),
           gradientEnd: Color(0xFF7EF94E),
         ),
-        SizedBox(width: defaultPadding),
+        // SizedBox(width: defaultPadding),
       ],
     );
   }
