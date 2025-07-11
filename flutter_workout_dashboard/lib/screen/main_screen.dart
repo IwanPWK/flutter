@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workout_dashboard/screen/dashboard/row1.dart';
 
 import '../constants.dart';
 import 'dashboard/header.dart';
@@ -27,6 +28,8 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   SizedBox(height: defaultPadding),
                   Header(),
+                  SizedBox(height: defaultPadding * 2),
+                  Row1(),
                   SizedBox(height: defaultPadding * 2),
                 ],
               ),
