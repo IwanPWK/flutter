@@ -30,7 +30,7 @@ class _SideMainState extends State<SideMain> {
       child: Column(
         children: [
           SizedBox(height: defaultPadding * 2),
-          Container(
+          SizedBox(
             height: 50,
             child: Text(
               'Workout Go',
@@ -47,7 +47,7 @@ class _SideMainState extends State<SideMain> {
             child: ListView.builder(
               itemCount: demoMainSide.length,
               itemBuilder: (context, index) {
-                return ListTile1(index, demoMainSide[index]);
+                return listTile1(index, demoMainSide[index]);
               },
             ),
           ),
@@ -57,7 +57,7 @@ class _SideMainState extends State<SideMain> {
             child: ListView.builder(
               itemCount: demoMainSideSetting.length,
               itemBuilder: (context, index) {
-                return ListTile2(index, demoMainSideSetting[index]);
+                return listTile2(index, demoMainSideSetting[index]);
               },
             ),
           ),
@@ -66,7 +66,7 @@ class _SideMainState extends State<SideMain> {
     );
   }
 
-  Container ListTile1(int index, MainSide mainside) {
+  Container listTile1(int index, MainSide mainside) {
     return Container(
       decoration: BoxDecoration(
         color: _selectedIndex == index ? Color(0xFFCCEDDD) : Colors.transparent,
@@ -112,7 +112,7 @@ class _SideMainState extends State<SideMain> {
     );
   }
 
-  Container ListTile2(int index, MainSideSetting mainsidesetting) {
+  Container listTile2(int index, MainSideSetting mainsidesetting) {
     return Container(
       decoration: BoxDecoration(
         color:
