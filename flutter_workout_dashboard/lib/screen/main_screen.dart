@@ -26,10 +26,12 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(
             flex: 4,
             child: Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: ScrollConfiguration(
-                  behavior: MyCustomScrollBehavior(),
+              //if you want to scroll vertically, or if without it, wheel to scroll vertically or shift + wheel to scroll horizontally
+              child: ScrollConfiguration(
+                behavior: MyCustomScrollBehavior(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Container(
