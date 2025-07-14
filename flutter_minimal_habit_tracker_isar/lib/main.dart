@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_minimal_habit_tracker_isar/database/habit.dart';
 import 'package:provider/provider.dart';
 
-import 'pages/home.dart';
+import 'screens/home.dart';
 import 'theme/theme_provider.dart';
 
 void main() async {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Habit Tracker',
       theme: Provider.of<ThemeProvider>(context).getTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const HomeScreen(),
     );
   }
 }
