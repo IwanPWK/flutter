@@ -3,6 +3,8 @@ import 'package:flutter_pos_dashboard_responsive/constants/constants.dart';
 import 'package:flutter_pos_dashboard_responsive/data/stat_data.dart';
 import 'package:flutter_pos_dashboard_responsive/widgets/stat_card.dart';
 
+import '../responsive/responsive_layout.dart';
+
 class StatList extends StatelessWidget {
   const StatList({super.key});
 
@@ -11,8 +13,8 @@ class StatList extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: ResponsiveLayout.isMobile(context) ? 2 : 4,
         crossAxisSpacing: AppConstants.defaultPadding,
         mainAxisSpacing: AppConstants.defaultPadding,
         childAspectRatio: 1.5,

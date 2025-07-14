@@ -4,8 +4,6 @@ import 'package:flutter_pos_dashboard_responsive/constants/constants.dart';
 import 'package:flutter_pos_dashboard_responsive/data/stat_data.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../responsive/responsive_layout.dart';
-
 class StatCard extends StatelessWidget {
   final StatInfo info;
 
@@ -51,16 +49,16 @@ class StatCard extends StatelessWidget {
                 const Icon(Icons.more_vert, color: Colors.white54),
               ],
             ),
-            if (!ResponsiveLayout.isMobile(context))
-              const SizedBox(height: AppConstants.defaultPadding),
+            // if (!ResponsiveLayout.isMobile(context))
+            const SizedBox(height: AppConstants.defaultPadding),
 
-            if (!ResponsiveLayout.isMobile(context))
-              Text(
-                info.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: Colors.white),
-              ),
+            // if (!ResponsiveLayout.isMobile(context))
+            Text(
+              info.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Colors.white),
+            ),
             const SizedBox(height: AppConstants.defaultPadding / 2),
             Text(
               info.total,
