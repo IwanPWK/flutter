@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'pages/person_page.dart';
+import 'pages/user_list_page.dart';
 import 'widgets/custom_button.dart';
 
 void main() {
@@ -32,7 +33,10 @@ class MyHomePage extends StatelessWidget {
         child: ListView(
           shrinkWrap: true,
           padding: const EdgeInsets.all(20),
-          children: const [CustomButton(title: 'Person', child: PersonPage())],
+          children: const [
+            CustomButton(title: 'Person', child: PersonPage()),
+            CustomButton(title: 'User List', child: UserListPage()),
+          ],
         ),
       ),
     );
