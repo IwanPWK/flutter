@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'modal/modal.dart';
@@ -15,6 +16,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   Repository repo = Repository();
   ScrollController scrollController = ScrollController();
+  TextEditingController textEditingController = TextEditingController();
   late Future<List<Images>> imagesList;
   int pageNumber = 1;
 
@@ -26,6 +28,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void dispose() {
+    textEditingController.dispose();
     scrollController.dispose();
     super.dispose();
   }
@@ -63,6 +66,45 @@ class _MainPageState extends State<MainPage> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                controller: textEditingController,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(left: 25),
+                  labelText: 'Search',
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 2),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 2),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.blue, width: 2),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.red, width: 2),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+                ],
+                onSubmitted: (value) {},
+              ),
+            ),
+            const SizedBox(height: 20),
             FutureBuilder(
               future: imagesList,
               builder: ((context, snapshot) {
