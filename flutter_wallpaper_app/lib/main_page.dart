@@ -18,6 +18,7 @@ class _MainPageState extends State<MainPage> {
   ScrollController scrollController = ScrollController();
   TextEditingController textEditingController = TextEditingController();
   late Future<List<Images>> imagesList;
+  String searchQuery = '';
   int pageNumber = 1;
   final List<String> categories = [
     'Nature',
@@ -29,9 +30,16 @@ class _MainPageState extends State<MainPage> {
     'People',
   ];
 
+  void getImagesBySearch({required String query, String pageQuery = '1'}) {
+    imagesList = repo.getImagesBySearch(query: query, pageQuery: pageQuery);
+    searchQuery = query;
+    setState(() {});
+  }
+
   @override
   void initState() {
     imagesList = repo.getImagesList(pageNumber: pageNumber);
+    searchQuery = '';
     super.initState();
   }
 
@@ -102,7 +110,9 @@ class _MainPageState extends State<MainPage> {
                   suffixIcon: Padding(
                     padding: const EdgeInsets.only(right: 5),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        getImagesBySearch(query: textEditingController.text);
+                      },
                       icon: const Icon(Icons.search),
                     ),
                   ),
@@ -110,7 +120,11 @@ class _MainPageState extends State<MainPage> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
-                onSubmitted: (value) {},
+                onSubmitted: (value) {
+                  getImagesBySearch(query: value);
+                },
+
+                textInputAction: TextInputAction.search,
               ),
             ),
             const SizedBox(height: 15),
@@ -122,7 +136,9 @@ class _MainPageState extends State<MainPage> {
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      getImagesBySearch(query: categories[index]);
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
@@ -196,7 +212,19 @@ class _MainPageState extends State<MainPage> {
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       color: Colors.blue,
                       textColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        pageNumber++;
+                        searchQuery.isNotEmpty
+                            ? imagesList = repo.getImagesBySearch(
+                              query: searchQuery,
+                              pageQuery: '$pageNumber',
+                            )
+                            : imagesList = repo.getImagesList(
+                              pageNumber: pageNumber,
+                            );
+
+                        setState(() {});
+                      },
                       child: const Text('Load More'),
                     ),
                   ],

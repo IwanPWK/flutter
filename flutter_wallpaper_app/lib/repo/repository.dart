@@ -64,8 +64,11 @@ class Repository {
     return image;
   }
 
-  Future<List<Images>> getImagesBySearch({required String query}) async {
-    final url = "${baseURL}search?query=$query&per_page=80";
+  Future<List<Images>> getImagesBySearch({
+    required String query,
+    required String pageQuery,
+  }) async {
+    final url = "${baseURL}search?query=$query&page=$pageQuery&per_page=80";
     List<Images> imagesList = [];
 
     try {
