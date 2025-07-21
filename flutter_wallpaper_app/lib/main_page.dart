@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'modal/modal.dart';
+import 'preview_page.dart';
 import 'repo/repository.dart';
 
 class MainPage extends StatefulWidget {
@@ -189,7 +190,21 @@ class _MainPageState extends State<MainPage> {
                         itemBuilder: (context, index) {
                           double height = (index % 10 + 1) * 100;
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => PreviewPage(
+                                        imageId: snapshot.data![index].imageID,
+                                        imageUrl:
+                                            snapshot
+                                                .data![index]
+                                                .imagePotraitPath,
+                                      ),
+                                ),
+                              );
+                            },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: CachedNetworkImage(
