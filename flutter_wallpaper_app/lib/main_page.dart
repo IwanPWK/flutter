@@ -19,6 +19,15 @@ class _MainPageState extends State<MainPage> {
   TextEditingController textEditingController = TextEditingController();
   late Future<List<Images>> imagesList;
   int pageNumber = 1;
+  final List<String> categories = [
+    'Nature',
+    'Abstract',
+    'Technology',
+    'Mountains',
+    'Cars',
+    'Bikes',
+    'People',
+  ];
 
   @override
   void initState() {
@@ -104,6 +113,36 @@ class _MainPageState extends State<MainPage> {
                 onSubmitted: (value) {},
               ),
             ),
+            const SizedBox(height: 15),
+            SizedBox(
+              height: 40,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey, width: 1),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 0,
+                          ),
+                          child: Center(child: Text(categories[index])),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
             const SizedBox(height: 20),
             FutureBuilder(
               future: imagesList,
@@ -152,18 +191,6 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    MaterialButton(
-                      minWidth: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        pageNumber++;
-                        imagesList = repo.getImagesList(pageNumber: pageNumber);
-                        setState(() {});
-                      },
-                      child: const Text('Load More'),
-                    ),
                   ],
                 );
               }),
