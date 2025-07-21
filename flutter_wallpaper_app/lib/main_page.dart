@@ -191,6 +191,14 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
+                    MaterialButton(
+                      minWidth: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      onPressed: () {},
+                      child: const Text('Load More'),
+                    ),
                   ],
                 );
               }),
