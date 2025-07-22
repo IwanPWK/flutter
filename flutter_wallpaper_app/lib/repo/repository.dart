@@ -35,7 +35,6 @@ class Repository {
 
         for (final json in jsonData["photos"] as Iterable) {
           final image = Images.fromJson(json);
-          print(image.imagePotraitPath);
           imagesList.add(image);
         }
       }
@@ -97,6 +96,26 @@ class Repository {
   }) async {
     try {
       final response = await http.get(Uri.parse(imageUrl));
+      final contentType = response.headers['content-type']; // e.g. image/jpeg
+      String extension = 'png';
+
+      if (contentType != null) {
+        if (contentType.contains('jpeg')) {
+          extension = 'jpg';
+        } else if (contentType.contains('png')) {
+          extension = 'png';
+        } else if (contentType.contains('gif')) {
+          extension = 'gif';
+        } else if (contentType.contains('jpg')) {
+          extension = 'jpg';
+        } else if (contentType.contains('webp')) {
+          extension = 'webp';
+        } else {
+          extension = 'png';
+        }
+      } else {
+        extension = 'png';
+      }
 
       if (response.statusCode >= 200 && response.statusCode <= 299) {
         final bytes = response.bodyBytes;
@@ -104,7 +123,7 @@ class Repository {
           ExternalPath.DIRECTORY_DOWNLOAD,
         );
 
-        final file = File("$directory/$imageId.png");
+        final file = File("$directory/${imageId}pexels.com.$extension");
         await file.writeAsBytes(bytes);
 
         try {
@@ -133,6 +152,16 @@ class Repository {
           }
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('failed to retrieve data $e'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    }
   }
 }

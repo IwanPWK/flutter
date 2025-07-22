@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'custom_scroll_behavior.dart';
-import 'main_page.dart';
+import 'splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       scrollBehavior: CustomScrollBehavior(),
-      title: 'Flutter Demo',
+      title: 'Iwan+ Wallpapers App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainPage(),
+      home: const SplashScreen(),
     );
   }
 }
