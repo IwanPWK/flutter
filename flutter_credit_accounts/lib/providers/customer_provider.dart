@@ -6,9 +6,20 @@ import '../services/database_service.dart';
 class CustomerProvider with ChangeNotifier {
   // dataase instance
   final DatabaseService _db = DatabaseService.instance;
+  String query = '';
   // create a customer list, this will be displayed on the app screen
   List<Customer> _customersList = [];
-  List<Customer> get customersList => _customersList;
+  // if the query == '', return all customers,
+  // else return only the customers that contain queryText in their name.
+  List<Customer> get customersList =>
+      query == ''
+          ? _customersList
+          : _customersList
+              .where(
+                (customer) =>
+                    customer.name.toLowerCase().contains(query.toLowerCase()),
+              )
+              .toList();
 
   // load the customers when this provider is initiated
   CustomerProvider() {

@@ -37,7 +37,7 @@ class DatabaseService {
       await txn.execute('''CREATE TABLE customers(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
-      created TEXT
+      created TEXT,
       youllGet REAL,
       youllGive REAL
       )''');
