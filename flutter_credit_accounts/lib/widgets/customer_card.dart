@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_credit_accounts/models/customer.dart';
-import 'package:flutter_credit_accounts/widgets/customer_form.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../providers/customer_provider.dart';
+import '../screens/customer_detail_screen.dart';
 
 class CustomerCard extends StatelessWidget {
   final Customer customer;
@@ -14,6 +16,7 @@ class CustomerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // returning a dismissible widget so the user can swipe and delete
     final provider = Provider.of<CustomerProvider>(context, listen: false);
+    double balance = (customer.youllGet - customer.youllGive);
     return Dismissible(
       key: ValueKey(customer.id),
       onDismissed: (direction) {
@@ -30,14 +33,45 @@ class CustomerCard extends StatelessWidget {
       },
       child: ListTile(
         onTap: () {
-          // navigate to account_detail_screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CustomerDetailScreen(customer: customer),
+            ),
+          );
         },
         contentPadding: EdgeInsets.zero,
         // first letter of the customer name
-        leading: CircleAvatar(child: Text(customer.name[0])),
-        title: Text(customer.name),
-        subtitle: Text(customer.created.toString()),
-        // trailing: Text('${customer.youllGet} - ${customer.youllGive}'),
+        leading: CircleAvatar(
+          backgroundColor: lightBlue,
+          child: Text(customer.name[0], style: TextStyle(color: Colors.white)),
+        ),
+        title: Text(
+          customer.name,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          'Added: ${DateFormat('MMM dd, yyyy').format(customer.created)}',
+        ),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // youllget, youllgive
+            Text(
+              balance > 0 ? 'Youll Get' : 'Youll Give',
+              style: TextStyle(fontSize: 12),
+            ),
+            // amount
+            Text(
+              balance.abs().toStringAsFixed(2),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: balance > 0 ? Colors.green : Colors.red,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

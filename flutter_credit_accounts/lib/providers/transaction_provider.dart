@@ -9,11 +9,26 @@ import 'customer_provider.dart';
 class TransactionProvider extends ChangeNotifier {
   // database instance
   final DatabaseService _db = DatabaseService.instance;
+  String _query = '';
   List<CustomerTransaction> _transactionsList = [];
-  List<CustomerTransaction> get transactionsList => _transactionsList;
+  // search by amount and description
+  List<CustomerTransaction> get transactionsList =>
+      _query == ''
+          ? _transactionsList
+          : _transactionsList
+              .where(
+                (tx) =>
+                    tx.description!.toLowerCase().contains(_query) ||
+                    tx.amount.toString().contains(_query),
+              )
+              .toList();
 
-  // load the transactions
-  Future<void> _loadTransactions(int customerId) async {
+  set query(String value) {
+    _query = value;
+    notifyListeners();
+  }
+
+  Future<void> loadTransactions(int customerId) async {
     _transactionsList = await _db.getCustomerTransactions(customerId);
     notifyListeners();
   }

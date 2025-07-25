@@ -7,9 +7,9 @@ class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
     super.key,
     required this.hintText,
-    required this.onChange,
+    required this.onChanged,
   });
-  final Function(String) onChange;
+  final Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomSearchBar extends StatelessWidget {
             // borderSide: BorderSide.none,
           ),
         ),
-        onChanged: onChange,
+        onChanged: onChanged,
       ),
     );
   }

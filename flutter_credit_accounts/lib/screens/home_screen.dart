@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../providers/customer_provider.dart';
+import '../widgets/action_button.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/customer_card.dart';
 import '../widgets/customer_form.dart';
@@ -47,8 +48,8 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 // summary
                 Summary(
-                  youllget: totals['youllGet'] ?? 0.00,
-                  youllgive: totals['youllGive'] ?? 0.00,
+                  youllGet: totals['youllGet'] ?? 0.00,
+                  youllGive: totals['youllGive'] ?? 0.00,
                   netBalance: null,
                 ),
                 const SizedBox(height: 20),
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                         // search
                         CustomSearchBar(
                           hintText: 'Search Customer',
-                          onChange: (value) {
+                          onChanged: (value) {
                             // change the query to the value of searchbar
                             customerProvider.query = value;
                           },
@@ -90,29 +91,14 @@ class HomeScreen extends StatelessWidget {
                         ),
 
                         // add customer button
-                        ElevatedButton(
+                        ActionButton(
                           onPressed: () {
                             showModalBottomSheet(
                               context: context,
                               builder: (context) => const CustomerForm(),
                             );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            padding: EdgeInsets.all(14),
-                          ),
-                          child: const Text(
-                            'Add Customer',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              letterSpacing: 1,
-                            ),
-                          ),
+                          title: 'Add Customer',
                         ),
                       ],
                     ),

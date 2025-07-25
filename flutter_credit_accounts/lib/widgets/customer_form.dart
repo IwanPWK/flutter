@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import '../models/customer.dart';
 import '../providers/customer_provider.dart';
+import 'action_button.dart';
 
 class CustomerForm extends StatefulWidget {
   const CustomerForm({super.key});
@@ -76,7 +77,9 @@ class _CustomerFormState extends State<CustomerForm> {
                   Text(
                     _selectedDate == null
                         ? 'Select Date'
-                        : _selectedDate.toString(),
+                        : DateFormat(
+                          'MMM dd, yyyy',
+                        ).format(_selectedDate!),
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
@@ -85,16 +88,9 @@ class _CustomerFormState extends State<CustomerForm> {
           ),
           const Spacer(),
           // add button
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: const EdgeInsets.all(14),
-            ),
-
-            onPressed: () async {
+          ActionButton(
+            title: 'Add Customer',
+            onPressed: () {
               if (_nameController.text.trim() != '' && _selectedDate != null) {
                 // print('Customer name: ${_nameController.text}');
                 // create a customer
@@ -109,19 +105,11 @@ class _CustomerFormState extends State<CustomerForm> {
                   listen: false,
                 );
                 // insert in database
-                await provider.addCustomer(customer);
+                provider.addCustomer(customer);
                 // close the bottom sheet
                 Navigator.pop(context);
               }
             },
-            child: const Text(
-              'Add Customer',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
           ),
         ],
       ),

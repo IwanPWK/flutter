@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class Summary extends StatelessWidget {
-  final double youllget;
-  final double youllgive;
+  final double youllGet;
+  final double youllGive;
   final double? netBalance;
   const Summary({
     super.key,
-    required this.youllget,
-    required this.youllgive,
+    required this.youllGet,
+    required this.youllGive,
     this.netBalance,
   });
 
@@ -35,7 +35,7 @@ class Summary extends StatelessWidget {
                     children: [
                       Text("You'll Get", style: TextStyle(color: Colors.white)),
                       Text(
-                        youllget.toStringAsFixed(2),
+                        youllGet.toStringAsFixed(2),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -63,7 +63,7 @@ class Summary extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        youllgive.toStringAsFixed(2),
+                        youllGive.toStringAsFixed(2),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
