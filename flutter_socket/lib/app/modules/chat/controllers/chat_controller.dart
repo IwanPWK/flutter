@@ -29,7 +29,7 @@ class ChatController extends GetxController {
   void onClose() {}
 
   void connect(int sourchatId) {
-    socket = IO.io("https://domain.biz.id", <String, dynamic>{
+    socket = IO.io("https://apisocket.kwan.biz.id", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });

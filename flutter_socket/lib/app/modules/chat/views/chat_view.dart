@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../models/model.dart';
+import '../../../routes/app_pages.dart';
 import '../../widgets/own_message_card_widget.dart';
 import '../../widgets/reply_card_widget.dart';
 import '../controllers/chat_controller.dart';
@@ -20,6 +21,10 @@ class ChatView extends GetView<ChatController> {
 
   @override
   Widget build(BuildContext context) {
+    if (Get.arguments == null) {
+      Future.microtask(() => Get.offAllNamed(Routes.login));
+      return const SizedBox();
+    }
     final Map<String, dynamic> args = Get.arguments;
     print('chat model ChatView ${args['chatModel']}');
     final ChatModel chatModel = args['chatModel'];

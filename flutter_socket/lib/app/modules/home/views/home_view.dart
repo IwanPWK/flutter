@@ -13,6 +13,10 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('cek nilai Get.arguments ${Get.arguments}');
+    if (Get.arguments == null) {
+      Future.microtask(() => Get.offAllNamed(Routes.login));
+      return const SizedBox();
+    }
     final Map<String, dynamic> args = Get.arguments;
     final List<ChatModel> chatModels = args['chatModels'];
     final ChatModel sourceChat = args['sourceChat'];
