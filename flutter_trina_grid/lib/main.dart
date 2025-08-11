@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TrinaGrid Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(),
     );
   }
@@ -41,6 +39,39 @@ class _MyHomePageState extends State<MyHomePage> {
     return row.cells['status']!.value != 'created';
   }
 
+  bool isDuplicateValue(
+    List<TrinaRow> rows,
+    String columnIndex,
+    String newValue,
+  ) {
+    for (var row in rows) {
+      print(row.cells[columnIndex]!.value == newValue);
+      if (row.cells[columnIndex]!.value == newValue) {
+        return true; // duplikat ketemu
+      }
+    }
+    return false; // tidak ada duplikat
+  }
+
+  String? validateNoDuplicate(
+    TrinaGridStateManager stateManager,
+    String columnIndex,
+    dynamic value,
+  ) {
+    if (isDuplicateValue(stateManager.rows, columnIndex, value.toString())) {
+      return 'Nama ini sudah ada di kolom';
+    }
+    return null; // valid
+  }
+
+  String? validateEmail(dynamic value) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegex.hasMatch(value.toString())) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -52,38 +83,46 @@ class _MyHomePageState extends State<MyHomePage> {
         type: TrinaColumnType.text(),
         readOnly: true,
         checkReadOnly: checkReadOnly,
-        titleSpan: const TextSpan(children: [
-          WidgetSpan(
-              child: Icon(
-            Icons.lock_outlined,
-            size: 17,
-          )),
-          TextSpan(text: 'Id'),
-        ]),
+        titleSpan: const TextSpan(
+          children: [
+            WidgetSpan(child: Icon(Icons.lock_outlined, size: 17)),
+            TextSpan(text: 'Id'),
+          ],
+        ),
       ),
       TrinaColumn(
         title: 'Name',
         field: 'name',
         type: TrinaColumnType.text(),
+        validator: (value, context) {
+          // if (value == null || value.toString().isEmpty) {
+          //   return 'Email is required';
+          // }
+
+          // validateEmail(value);
+          final validationMessage = validateNoDuplicate(
+            stateManager,
+            'name',
+            value,
+          );
+          return (validationMessage);
+
+          // return null; // Return null if validation passes
+        },
       ),
       TrinaColumn(
         title: 'Status',
         field: 'status',
-        type: TrinaColumnType.select(<String>[
-          'saved',
-          'edited',
-          'created',
-        ]),
+        type: TrinaColumnType.select(<String>['saved', 'edited', 'created']),
         enableEditingMode: false,
         frozen: TrinaColumnFrozen.end,
-        titleSpan: const TextSpan(children: [
-          WidgetSpan(
-              child: Icon(
-            Icons.lock,
-            size: 17,
-          )),
-          TextSpan(text: 'Status'),
-        ]),
+        titleSpan: const TextSpan(
+          children: [
+            WidgetSpan(child: Icon(Icons.lock, size: 17)),
+            TextSpan(text: 'Status'),
+          ],
+        ),
+
         renderer: (rendererContext) {
           Color textColor = Colors.black;
 
@@ -97,10 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return Text(
             rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
           );
         },
       ),
@@ -116,61 +152,75 @@ class _MyHomePageState extends State<MyHomePage> {
     ]);
 
     rows.addAll([
-      TrinaRow(cells: {
-        'id': TrinaCell(value: 'user1'),
-        'name': TrinaCell(value: 'user name 1'),
-        'status': TrinaCell(value: 'saved'),
-      }),
-      TrinaRow(cells: {
-        'id': TrinaCell(value: 'user2'),
-        'name': TrinaCell(value: 'user name 2'),
-        'status': TrinaCell(value: 'saved'),
-      }),
-      TrinaRow(cells: {
-        'id': TrinaCell(value: 'user3'),
-        'name': TrinaCell(value: 'user name 3'),
-        'status': TrinaCell(value: 'saved'),
-      }),
+      TrinaRow(
+        cells: {
+          'id': TrinaCell(value: 'user1'),
+          'name': TrinaCell(value: 'user name 1'),
+          'status': TrinaCell(value: 'saved'),
+        },
+      ),
+      TrinaRow(
+        cells: {
+          'id': TrinaCell(value: 'user2'),
+          'name': TrinaCell(value: 'user name 2'),
+          'status': TrinaCell(value: 'saved'),
+        },
+      ),
+      TrinaRow(
+        cells: {
+          'id': TrinaCell(value: 'user3'),
+          'name': TrinaCell(value: 'user name 3'),
+          'status': TrinaCell(value: 'saved'),
+        },
+      ),
     ]);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('TrinaGrid Example'),
-      ),
+      appBar: AppBar(title: const Text('TrinaGrid Example')),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: TrinaGrid(
-        columns: columns,
-        rows: rows,
-        columnGroups: columnGroups,
-        onChanged: (TrinaGridOnChangedEvent event) {
-          print(event);
+          columns: columns,
+          rows: rows,
+          columnGroups: columnGroups,
+          onChanged: (TrinaGridOnChangedEvent event) {
+            if (event.row.cells['status']!.value == 'saved') {
+              event.row.cells['status']!.value = 'edited';
+            }
+            // validateNoDuplicate(stateManager, event.column.field, event.value);
 
-          if (event.row.cells['status']!.value == 'saved') {
-            event.row.cells['status']!.value = 'edited';
-          }
-
-          stateManager.notifyListeners();
-        },
-        onLoaded: (TrinaGridOnLoadedEvent event) {
-          stateManager = event.stateManager;
-        },
-        createHeader: (stateManager) => _Header(stateManager: stateManager),
+            stateManager.notifyListeners();
+          },
+          onLoaded: (TrinaGridOnLoadedEvent event) {
+            stateManager = event.stateManager;
+            List<TrinaColumnGroup> groups = columnGroups;
+            //          for (var group in groups) {
+            //           print(group.fields['status']);
+            //   if (group.fields!.contains('status')) {
+            //     print('Status ditemukan di group: ${group.title}');
+            //   }
+            // }
+          },
+          onValidationFailed: (event) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(event.errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+          createHeader: (stateManager) => _Header(stateManager: stateManager),
+        ),
       ),
-    )
     );
- 
   }
 }
 
 class _Header extends StatefulWidget {
-  const _Header({
-    required this.stateManager,
-  });
+  const _Header({required this.stateManager});
 
   final TrinaGridStateManager stateManager;
 
@@ -278,8 +328,9 @@ class _HeaderState extends State<_Header> {
   }
 
   void handleFiltering() {
-    widget.stateManager
-        .setShowColumnFilter(!widget.stateManager.showColumnFilter);
+    widget.stateManager.setShowColumnFilter(
+      !widget.stateManager.showColumnFilter,
+    );
   }
 
   void setGridSelectingMode(TrinaGridSelectingMode? mode) {
@@ -308,16 +359,16 @@ class _HeaderState extends State<_Header> {
                 value: addCount,
                 items:
                     [1, 5, 10, 50, 100].map<DropdownMenuItem<int>>((int count) {
-                  final color = addCount == count ? Colors.blue : null;
+                      final color = addCount == count ? Colors.blue : null;
 
-                  return DropdownMenuItem<int>(
-                    value: count,
-                    child: Text(
-                      count.toString(),
-                      style: TextStyle(color: color),
-                    ),
-                  );
-                }).toList(),
+                      return DropdownMenuItem<int>(
+                        value: count,
+                        child: Text(
+                          count.toString(),
+                          style: TextStyle(color: color),
+                        ),
+                      );
+                    }).toList(),
                 onChanged: (int? count) {
                   setState(() {
                     addCount = count ?? 1;
@@ -356,19 +407,18 @@ class _HeaderState extends State<_Header> {
             DropdownButtonHideUnderline(
               child: DropdownButton(
                 value: gridSelectingMode,
-                items: TrinaGridSelectingMode.values
-                    .map<DropdownMenuItem<TrinaGridSelectingMode>>(
-                        (TrinaGridSelectingMode item) {
-                  final color = gridSelectingMode == item ? Colors.blue : null;
+                items:
+                    TrinaGridSelectingMode.values.map<
+                      DropdownMenuItem<TrinaGridSelectingMode>
+                    >((TrinaGridSelectingMode item) {
+                      final color =
+                          gridSelectingMode == item ? Colors.blue : null;
 
-                  return DropdownMenuItem<TrinaGridSelectingMode>(
-                    value: item,
-                    child: Text(
-                      item.name,
-                      style: TextStyle(color: color),
-                    ),
-                  );
-                }).toList(),
+                      return DropdownMenuItem<TrinaGridSelectingMode>(
+                        value: item,
+                        child: Text(item.name, style: TextStyle(color: color)),
+                      );
+                    }).toList(),
                 onChanged: (TrinaGridSelectingMode? mode) {
                   setGridSelectingMode(mode);
                 },
