@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_responsive_portfolio/view/components/about_me.dart';
 import 'package:flutter_responsive_portfolio/view/components/drawer.dart';
+import 'package:flutter_responsive_portfolio/view/components/footer.dart';
+import 'package:flutter_responsive_portfolio/view/components/social_icons.dart';
 
 import '../responsive/responsive.dart';
 import '../util/colors.dart';
+import 'components/contact_form.dart';
+import 'components/profile_and_intro.dart';
+import 'components/recent_project.dart';
+import 'components/top_skill.dart';
 import 'components/topbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,7 +26,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         title: const Text(
-          "Nabin Paudyal",
+          "Kurniawan Wijaya",
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w900,
@@ -49,30 +56,29 @@ class HomePage extends StatelessWidget {
               : null,
       body: SafeArea(
         child: Stack(
+          // Stack ->  SingleChildScrollView, Collumn cannot
           children: [
             // for Body parts
             SingleChildScrollView(
               controller: _scrollController,
               child: Column(
                 children: [
-                  // const ProfileAndIntro(),
-                  // SizedBox(height: Responsive.isMobile(context) ? 40 : 0),
-                  // const AboutMe(),
-                  // const SizedBox(height: 55),
-                  // const TopSkills(),
-                  // const SizedBox(height: 55),
-                  // const RecentProject(),
-                  // const SizedBox(height: 55),
-                  // const ContactForm(),
-                  // const SizedBox(height: 55),
-                  // const Footer(),
-                  // const SizedBox(
-                  //   height: 30,
-                  // ),
+                  const ProfileAndIntro(),
+                  SizedBox(height: Responsive.isMobile(context) ? 40 : 0),
+                  const AboutMe(),
+                  const SizedBox(height: 55),
+                  const TopSkills(),
+                  const SizedBox(height: 55),
+                  const RecentProject(),
+                  const SizedBox(height: 55),
+                  const ContactForm(),
+                  const SizedBox(height: 55),
+                  const Footer(),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
-            // const SocialIcons()
+            const SocialIcons(),
           ],
         ),
       ),
