@@ -150,10 +150,10 @@ final List<InfoCardModel> infoCardData = [
 ];
 
 const menuIcons = [
-  'assets/dashoboard/home.svg',
-  'assets/dashoboard/pie-chart.svg',
-  'assets/dashoboard/clipboard.svg',
-  'assets/dashoboard/credit-card.svg',
-  'assets/dashoboard/trophy.svg',
-  'assets/dashoboard/invoice.svg',
+  'assets/home.svg',
+  'assets/pie-chart.svg',
+  'assets/clipboard.svg',
+  'assets/credit-card.svg',
+  'assets/trophy.svg',
+  'assets/invoice.svg',
 ];

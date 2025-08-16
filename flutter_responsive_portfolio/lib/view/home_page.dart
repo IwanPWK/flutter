@@ -59,23 +59,26 @@ class HomePage extends StatelessWidget {
           // Stack ->  SingleChildScrollView, Collumn cannot
           children: [
             // for Body parts
-            SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  const ProfileAndIntro(),
-                  SizedBox(height: Responsive.isMobile(context) ? 40 : 0),
-                  const AboutMe(),
-                  const SizedBox(height: 55),
-                  const TopSkills(),
-                  const SizedBox(height: 55),
-                  const RecentProject(),
-                  const SizedBox(height: 55),
-                  const ContactForm(),
-                  const SizedBox(height: 55),
-                  const Footer(),
-                  const SizedBox(height: 30),
-                ],
+            SizedBox(
+              width: Responsive.widthOfScreen(context),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    const ProfileAndIntro(),
+                    SizedBox(height: Responsive.isMobile(context) ? 40 : 0),
+                    const AboutMe(),
+                    const SizedBox(height: 55),
+                    const TopSkills(),
+                    const SizedBox(height: 55),
+                    const RecentProject(),
+                    const SizedBox(height: 55),
+                    const ContactForm(),
+                    const SizedBox(height: 55),
+                    const Footer(),
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
             ),
             const SocialIcons(),

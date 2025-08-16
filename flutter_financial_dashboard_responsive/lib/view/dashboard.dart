@@ -3,7 +3,10 @@ import 'package:flutter_financial_dashboard_responsive/config/size_config.dart';
 import 'package:flutter_financial_dashboard_responsive/util/colors.dart';
 
 import '../config/responsive.dart';
+import '../model/model.dart';
+import 'transfer_info_card.dart';
 import 'widgets/header_action_items.dart';
+import 'widgets/header_parts.dart';
 import 'widgets/side_drawer_menu.dart';
 
 class MyDashboard extends StatelessWidget {
@@ -35,6 +38,49 @@ class MyDashboard extends StatelessWidget {
                 preferredSize: Size.zero,
                 child: SizedBox(),
               ),
+      body: SafeArea(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (Responsive.isDesktop(context))
+              const Expanded(flex: 1, child: SideDrawerMenu()),
+            Expanded(
+              flex: 10,
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 30,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // for dashboard text, search bar
+                      const HeaderParts(),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 4),
+                      // for transfor info
+                      SizedBox(
+                        width: SizeConfig.screenWidth,
+                        child: Wrap(
+                          spacing: 20,
+                          runSpacing: 20,
+                          alignment: WrapAlignment.spaceBetween,
+                          // Dynamically map over infoCardData
+                          children:
+                              infoCardData.map((info) {
+                                return TransferInfoCard(infoCardModel: info);
+                              }).toList(),
+                        ),
+                      ),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 4),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
