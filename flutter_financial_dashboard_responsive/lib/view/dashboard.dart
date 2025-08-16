@@ -5,6 +5,7 @@ import 'package:flutter_financial_dashboard_responsive/util/colors.dart';
 import '../config/responsive.dart';
 import '../model/model.dart';
 import 'transfer_info_card.dart';
+import 'widgets/bar_chart.dart';
 import 'widgets/header_action_items.dart';
 import 'widgets/header_parts.dart';
 import 'widgets/side_drawer_menu.dart';
@@ -73,6 +74,48 @@ class MyDashboard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: SizeConfig.blockSizeVertical * 4),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Balance",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: MyAppColor.secondary,
+                                  height: 1.3,
+                                ),
+                              ),
+                              Text(
+                                '\$1500',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: MyAppColor.primary,
+                                  fontWeight: FontWeight.w800,
+                                  height: 1.3,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            'Past 30 DAYS',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: MyAppColor.secondary,
+                              height: 1.3,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                      const SizedBox(
+                        height: 180,
+                        child: BarChartRepresentation(),
+                      ),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 5),
                     ],
                   ),
                 ),

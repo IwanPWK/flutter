@@ -11,7 +11,7 @@ class HeaderActionItems extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {},
-          icon: SvgPicture.asset("assets/dashoboard/calendar.svg", width: 20),
+          icon: SvgPicture.asset("assets/calendar.svg", width: 20),
         ),
         const SizedBox(width: 10),
         Stack(
@@ -23,10 +23,7 @@ class HeaderActionItems extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {},
-              icon: SvgPicture.asset(
-                "assets/dashoboard/notification.svg",
-                width: 20,
-              ),
+              icon: SvgPicture.asset("assets/notification.svg", width: 20),
             ),
           ],
         ),

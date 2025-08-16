@@ -10,7 +10,7 @@ class SideDrawerMenu extends StatefulWidget {
   const SideDrawerMenu({super.key});
 
   @override
-  _SideDrawerMenuState createState() => _SideDrawerMenuState();
+  State<SideDrawerMenu> createState() => _SideDrawerMenuState();
 }
 
 class _SideDrawerMenuState extends State<SideDrawerMenu> {
@@ -37,7 +37,7 @@ class _SideDrawerMenuState extends State<SideDrawerMenu> {
                 child: SizedBox(
                   width: 35,
                   height: 20,
-                  child: SvgPicture.asset('assets/dashoboard/three_color.svg'),
+                  child: SvgPicture.asset('assets/three_color.svg'),
                 ),
               ),
               ...List.generate(menuIcons.length, (index) {
