@@ -30,7 +30,7 @@ class ProfileAndIntro extends StatelessWidget {
         ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: heightSizedBox,
-            // minWidth: widthSizedBox,
+            // minWidth: widthSizedBox,coc
             // maxHeight: heightSizedBox,
           ),
           child: SizedBox(

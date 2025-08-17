@@ -111,11 +111,30 @@ class MyDashboard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                      const SizedBox(
-                        height: 180,
-                        child: BarChartRepresentation(),
-                      ),
+                      SizedBox(height: 180, child: BarChartRepresentation()),
                       SizedBox(height: SizeConfig.blockSizeVertical * 5),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'History',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              color: MyAppColor.primary,
+                              height: 1.3,
+                            ),
+                          ),
+                          Text(
+                            'Transaction of last 6 months',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: MyAppColor.secondary,
+                              height: 1.3,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
