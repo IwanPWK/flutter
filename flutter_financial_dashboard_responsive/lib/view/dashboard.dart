@@ -4,7 +4,9 @@ import 'package:flutter_financial_dashboard_responsive/util/colors.dart';
 
 import '../config/responsive.dart';
 import '../model/model.dart';
-import 'transfer_info_card.dart';
+import 'widgets/payment_detail_info.dart';
+import 'widgets/show_history.dart';
+import 'widgets/transfer_info_card.dart';
 import 'widgets/bar_chart.dart';
 import 'widgets/header_action_items.dart';
 import 'widgets/header_parts.dart';
@@ -135,11 +137,37 @@ class MyDashboard extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                      const ShowHistory(),
+                      if (!Responsive.isDesktop(context))
+                        const PaymentDetailInfo(),
                     ],
                   ),
                 ),
               ),
             ),
+            if (Responsive.isDesktop(context))
+              Expanded(
+                flex: 4,
+                child: SafeArea(
+                  child: Container(
+                    width: double.infinity,
+                    height: SizeConfig.screenHeight,
+                    decoration: const BoxDecoration(
+                      color: MyAppColor.secondaryBg,
+                    ),
+                    child: const SingleChildScrollView(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 30,
+                        horizontal: 30,
+                      ),
+                      child: Column(
+                        children: [HeaderActionItems(), PaymentDetailInfo()],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

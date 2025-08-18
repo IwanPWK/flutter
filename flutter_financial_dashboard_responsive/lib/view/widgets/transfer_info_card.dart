@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../config/responsive.dart';
-import '../config/size_config.dart';
-import '../model/model.dart';
-import '../util/colors.dart';
+import '../../config/responsive.dart';
+import '../../config/size_config.dart';
+import '../../model/model.dart';
+import '../../util/colors.dart';
 
 class TransferInfoCard extends StatelessWidget {
   final InfoCardModel infoCardModel;
