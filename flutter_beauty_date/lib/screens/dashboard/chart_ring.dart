@@ -7,38 +7,56 @@ class ChartRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          height: 195,
-          width: 195,
-          child: SfCircularChart(
-            series: <CircularSeries>[
-              DoughnutSeries<ChartData, String>(
-                dataSource: chartData,
-                innerRadius: "85%",
-                startAngle: 350,
-                endAngle: 350,
-                cornerStyle: CornerStyle.bothCurve,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y,
-                pointColorMapper: (ChartData data, _) => data.color,
-                dataLabelSettings: const DataLabelSettings(isVisible: true),
+    return SizedBox(
+      height: 195,
+      width: 195,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            top: 0,
+            child: SizedBox(
+              height: 195,
+              width: 195,
+              child: Center(
+                child: SfCircularChart(
+                  series: <CircularSeries>[
+                    DoughnutSeries<ChartData, String>(
+                      dataSource: chartData,
+                      innerRadius: "85%",
+                      startAngle: 350,
+                      endAngle: 350,
+                      cornerStyle: CornerStyle.bothCurve,
+                      xValueMapper: (ChartData data, _) => data.x,
+                      yValueMapper: (ChartData data, _) => data.y,
+                      pointColorMapper: (ChartData data, _) => data.color,
+                      dataLabelSettings: const DataLabelSettings(
+                        isVisible: true,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-        Positioned.fill(
-          child: Center(
-            child: Text(
-              "24.9%",
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.white),
             ),
           ),
-        ),
-      ],
+          Positioned(
+            left: 0,
+            top: 0,
+            child: SizedBox(
+              height: 195,
+              width: 195,
+              child: Center(
+                child: Text(
+                  "24.9%",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

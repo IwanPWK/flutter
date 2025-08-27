@@ -27,7 +27,7 @@ class Dashboard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Header(),
-          SizedBox(height: defaultPadding),
+          // SizedBox(height: defaultPadding),
           Row1(),
           SizedBox(height: defaultPadding),
           Row2(),

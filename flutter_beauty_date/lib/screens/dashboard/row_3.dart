@@ -61,10 +61,10 @@ class Row3 extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Expanded(flex: 2, child: ChartRing()),
+                    Expanded(child: ChartRing()),
                     // Spacer(),
+                    // Jika saya comment expanded di bawah ini, erornya hilang
                     Expanded(
-                      flex: 2,
                       child: SizedBox(
                         height: 150,
                         child: Scrollbar(

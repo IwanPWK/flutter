@@ -238,44 +238,43 @@ class ContainerBar extends StatelessWidget {
   final Color color;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.ubuntu(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.ubuntu(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
                 ),
-                Spacer(),
-                Text(
-                  value,
-                  style: GoogleFonts.ubuntu(
-                    color: Colors.white38,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 5),
-            SizedBox(
-              height: 7,
-              width: double.infinity,
-              child: GFProgressBar(
-                margin: EdgeInsets.only(left: 0),
-                percentage: percentage,
-                backgroundColor: bgColor,
-                progressBarColor: color,
               ),
+              Spacer(),
+              Text(
+                value,
+                style: GoogleFonts.ubuntu(
+                  color: Colors.white38,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 5),
+          SizedBox(
+            height: 7,
+            width: double.infinity,
+            child: GFProgressBar(
+              margin: EdgeInsets.only(left: 0),
+              percentage: percentage,
+              backgroundColor: bgColor,
+              progressBarColor: color,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
