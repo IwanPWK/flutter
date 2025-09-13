@@ -9,31 +9,62 @@ class UserListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userList = ref.watch(userListProvider);
+    print('userList: $userList');
     return Scaffold(
       appBar: AppBar(title: const Text('User List')),
-      body: userList.when(
-        data: (users) {
-          return ListView.separated(
-            itemCount: users.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider();
-            },
-            itemBuilder: (BuildContext context, int index) {
-              final user = users[index];
-              return ListTile(
-                leading: CircleAvatar(child: Text(user.id.toString())),
-              );
-            },
-          );
-        },
-        error: (e, st) {
-          return Text(
+      // can use userList.when or switch(), recommended to use when() method
+      body: switch (userList) {
+        AsyncData(value: final users) => ListView.separated(
+          itemCount: users.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return const Divider();
+          },
+          itemBuilder: (BuildContext context, int index) {
+            final user = users[index];
+
+            return ListTile(
+              leading: CircleAvatar(child: Text(user.id.toString())),
+              title: Text(user.name),
+            );
+          },
+        ),
+        AsyncError(error: final e) => Center(
+          child: Text(
             e.toString(),
             style: const TextStyle(fontSize: 20, color: Colors.red),
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-      ),
+          ),
+        ),
+        _ => const Center(child: CircularProgressIndicator()),
+      },
+
+      // body: userList.when(
+      //   data: (users) {
+      //     return ListView.separated(
+      //       physics: const AlwaysScrollableScrollPhysics(),
+      //       itemCount: users.length,
+      //       separatorBuilder: (BuildContext context, int index) {
+      //         return const Divider();
+      //       },
+      //       itemBuilder: (BuildContext context, int index) {
+      //         final user = users[index];
+
+      //         return ListTile(
+      //           leading: CircleAvatar(child: Text(user.id.toString())),
+      //           title: Text(user.name),
+      //         );
+      //       },
+      //     );
+      //   },
+      //   error: (e, st) {
+      //     return Center(
+      //       child: Text(
+      //         e.toString(),
+      //         style: const TextStyle(fontSize: 20, color: Colors.red),
+      //       ),
+      //     );
+      //   },
+      //   loading: () => const Center(child: CircularProgressIndicator()),
+      // ),
     );
   }
 }
