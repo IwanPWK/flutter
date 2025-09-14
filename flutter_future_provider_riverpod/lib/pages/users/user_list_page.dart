@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'user_detail_page.dart';
 import 'users_providers.dart';
 
 class UserListPage extends ConsumerWidget {
@@ -9,62 +10,70 @@ class UserListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userList = ref.watch(userListProvider);
-    print('userList: $userList');
+    // print('userList: $userList');
     return Scaffold(
       appBar: AppBar(title: const Text('User List')),
-      // can use userList.when or switch(), recommended to use when() method
-      body: switch (userList) {
-        AsyncData(value: final users) => ListView.separated(
-          itemCount: users.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider();
-          },
-          itemBuilder: (BuildContext context, int index) {
-            final user = users[index];
 
-            return ListTile(
-              leading: CircleAvatar(child: Text(user.id.toString())),
-              title: Text(user.name),
-            );
-          },
-        ),
-        AsyncError(error: final e) => Center(
-          child: Text(
-            e.toString(),
-            style: const TextStyle(fontSize: 20, color: Colors.red),
-          ),
-        ),
-        _ => const Center(child: CircularProgressIndicator()),
-      },
+      // ===== can use userList.when or switch(), recommended to use when() method =====
 
-      // body: userList.when(
-      //   data: (users) {
-      //     return ListView.separated(
-      //       physics: const AlwaysScrollableScrollPhysics(),
-      //       itemCount: users.length,
-      //       separatorBuilder: (BuildContext context, int index) {
-      //         return const Divider();
-      //       },
-      //       itemBuilder: (BuildContext context, int index) {
-      //         final user = users[index];
+      // body: switch (userList) {
+      //   AsyncData(value: final users) => ListView.separated(
+      //     itemCount: users.length,
+      //     separatorBuilder: (BuildContext context, int index) {
+      //       return const Divider();
+      //     },
+      //     itemBuilder: (BuildContext context, int index) {
+      //       final user = users[index];
 
-      //         return ListTile(
-      //           leading: CircleAvatar(child: Text(user.id.toString())),
-      //           title: Text(user.name),
-      //         );
-      //       },
-      //     );
-      //   },
-      //   error: (e, st) {
-      //     return Center(
-      //       child: Text(
-      //         e.toString(),
-      //         style: const TextStyle(fontSize: 20, color: Colors.red),
-      //       ),
-      //     );
-      //   },
-      //   loading: () => const Center(child: CircularProgressIndicator()),
-      // ),
+      //       return ListTile(
+      //         leading: CircleAvatar(child: Text(user.id.toString())),
+      //         title: Text(user.name),
+      //       );
+      //     },
+      //   ),
+      //   AsyncError(error: final e) => Center(
+      //     child: Text(
+      //       e.toString(),
+      //       style: const TextStyle(fontSize: 20, color: Colors.red),
+      //     ),
+      //   ),
+      //   _ => const Center(child: CircularProgressIndicator()),
+      // },
+      body: userList.when(
+        data: (users) {
+          return ListView.separated(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: users.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider();
+            },
+            itemBuilder: (BuildContext context, int index) {
+              final user = users[index];
+
+              return ListTile(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => UserDetailPage(userId: user.id),
+                    ),
+                  );
+                },
+                leading: CircleAvatar(child: Text(user.id.toString())),
+                title: Text(user.name),
+              );
+            },
+          );
+        },
+        error: (e, st) {
+          return Center(
+            child: Text(
+              e.toString(),
+              style: const TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

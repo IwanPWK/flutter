@@ -4,6 +4,6 @@ import 'package:dio/dio.dart';
 part 'dio_provider.g.dart';
 
 @riverpod
-Dio dio(Ref ref) {
+Dio dio(DioRef ref) {
   return Dio(BaseOptions(baseUrl: 'https://jsonplaceholder.typicode.com'));
 }
